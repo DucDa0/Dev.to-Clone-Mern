@@ -19,7 +19,6 @@ const CommentEdit = ({ setEdit, comment, editComment, postId, comtId }) => {
             e.preventDefault();
             editComment(postId, comtId, { text });
             setEdit(false);
-            document.body.style.overflow = '';
           }}
         >
           <textarea
@@ -42,7 +41,6 @@ const CommentEdit = ({ setEdit, comment, editComment, postId, comtId }) => {
           <button
             onClick={() => {
               setEdit(false);
-              document.body.style.overflow = '';
             }}
             className='btn btn-light btn-hover'
           >

@@ -43,7 +43,6 @@ const ActionPostItem = ({
         handleLikeAction();
       }
     } else {
-      document.body.style.overflow = 'hidden';
       return setAuth(true);
     }
   };
@@ -59,7 +58,6 @@ const ActionPostItem = ({
         handleBookmarksAction();
       }
     } else {
-      document.body.style.overflow = 'hidden';
       return setAuth(true);
     }
   };

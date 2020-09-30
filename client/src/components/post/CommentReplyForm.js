@@ -42,7 +42,6 @@ const CommentReplyForm = ({
               date: moment().toISOString(),
             });
             setReply(false);
-            document.body.style.overflow = '';
           }}
         >
           <textarea
@@ -66,7 +65,6 @@ const CommentReplyForm = ({
           <button
             onClick={() => {
               setReply(false);
-              document.body.style.overflow = '';
             }}
             className='btn btn-light btn-hover'
           >

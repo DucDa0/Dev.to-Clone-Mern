@@ -170,7 +170,6 @@ const CommentReplyItem = ({
             <div
               onClick={() => {
                 setReply(true);
-                document.body.style.overflow = 'hidden';
               }}
               className='comment-area__action-item reply'
             >
@@ -183,7 +182,6 @@ const CommentReplyItem = ({
             <div
               onClick={() => {
                 setReply(true);
-                document.body.style.overflow = 'hidden';
               }}
               className='comment-area__action-item reply'
             >
@@ -192,7 +190,6 @@ const CommentReplyItem = ({
             <div
               onClick={() => {
                 setEdit(true);
-                document.body.style.overflow = 'hidden';
               }}
               className='comment-area__action-item edit'
             >
@@ -200,7 +197,6 @@ const CommentReplyItem = ({
             </div>
             <div
               onClick={() => {
-                document.body.style.overflow = 'hidden';
                 setRemoveComt(true);
               }}
               className='comment-area__action-item delete'

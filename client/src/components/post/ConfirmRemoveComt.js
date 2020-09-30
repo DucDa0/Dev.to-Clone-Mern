@@ -13,7 +13,6 @@ const ConfirmRemoveComt = ({
       <div className='child remove-comt close-action'>
         <button
           onClick={() => {
-            document.body.style.overflow = '';
             setRemoveComt(false);
           }}
           style={{ position: 'absolute', right: 0, top: 0, margin: '8px' }}
@@ -31,7 +30,6 @@ const ConfirmRemoveComt = ({
               if (deleteReplyComment) {
                 deleteReplyComment(postId, comtId, _id);
               }
-              document.body.style.overflow = '';
               setRemoveComt(false);
             }}
             className='btn btn-dark m-1'
@@ -40,7 +38,6 @@ const ConfirmRemoveComt = ({
           </button>
           <button
             onClick={() => {
-              document.body.style.overflow = '';
               setRemoveComt(false);
             }}
             className='btn btn-light m-1'

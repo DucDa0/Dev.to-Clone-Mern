@@ -63,7 +63,6 @@ function TopFeedFilter({ filterStatus, setFilterStatus, setShowRSide, path }) {
       {path === '/' && (
         <div
           onClick={() => {
-            document.body.style.overflow = 'hidden';
             setShowRSide(true);
           }}
           className='right-side-feed__icon'

@@ -76,7 +76,6 @@ const Posts = ({
     if (e.target.classList.contains('backdrop-side')) {
       setShowRSide(false);
       setShowLSide(false);
-      document.body.style.overflow = '';
     }
   };
   return (
@@ -99,7 +98,6 @@ const Posts = ({
           <div className='top-feed'>
             <div
               onClick={() => {
-                document.body.style.overflow = 'hidden';
                 setShowLSide(true);
               }}
               className='left-side-feed__icon'
