@@ -11,17 +11,11 @@ import { deletePost } from '../../actions/post';
 
 // others
 import Moment from 'react-moment';
-import { Loader } from '../loader/Loader';
 function PostItem({ post, deletePost }) {
-  const [isProcessing, setIsProcessing] = useState(false);
   const handleDeletePost = async () => {
-    setIsProcessing(true);
     await deletePost(post._id);
-    setIsProcessing(false);
   };
-  return isProcessing ? (
-    <Loader size={46} isButton={false} />
-  ) : (
+  return (
     <div className='post-list__item bg-white my'>
       <div className='post-list__item-wrap'>
         <div className='item-infor'>
