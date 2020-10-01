@@ -88,15 +88,12 @@ export const updateUser = (formData) => async (dispatch) => {
       );
     }
     toast.success('Update complete!');
-    return true;
   } catch (err) {
     const errors = err.response.data.errors;
 
     if (errors) {
       errors.forEach((error) => toast.error(error.msg));
-      return false;
     }
-    return false;
   }
 };
 // Register User
@@ -104,13 +101,11 @@ export const register = (formData) => async (dispatch) => {
   try {
     const res = await api.post('/users', formData);
     toast.success(res.data.message);
-    return true;
   } catch (err) {
     const errors = err.response.data.errors;
 
     if (errors) {
       errors.forEach((error) => toast.error(error.msg));
-      return false;
     }
   }
 };
@@ -126,7 +121,6 @@ export const activate = (token) => async (dispatch) => {
 
     if (errors) {
       errors.forEach((error) => toast.error(error.msg));
-      return false;
     }
   }
 };
@@ -142,7 +136,6 @@ export const activateNewEmail = (token) => async (dispatch) => {
 
     if (errors) {
       errors.forEach((error) => toast.error(error.msg));
-      return false;
     }
   }
 };
@@ -152,13 +145,11 @@ export const forget = (email) => async (dispatch) => {
   try {
     const res = await api.put(`users/password/forget`, email);
     toast.success(res.data.message);
-    return true;
   } catch (err) {
     const errors = err.response.data.errors;
 
     if (errors) {
       errors.forEach((error) => toast.error(error.msg));
-      return false;
     }
   }
 };
@@ -174,7 +165,6 @@ export const reset = (data) => async (dispatch) => {
 
     if (errors) {
       errors.forEach((error) => toast.error(error.msg));
-      return false;
     }
   }
 };
@@ -192,7 +182,6 @@ export const login = (email, password) => async (dispatch) => {
     });
 
     dispatch(loadUser());
-    return true;
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -203,7 +192,6 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({
       type: LOGIN_FAIL,
     });
-    return false;
   }
 };
 

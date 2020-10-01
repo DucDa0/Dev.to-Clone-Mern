@@ -12,18 +12,14 @@ import { register } from '../../actions/auth';
 import { toast } from 'react-toastify';
 import { Loader } from '../loader/Loader';
 
-const Register = ({
-  register,
-  history,
-  auth: { isAuthenticated, loading },
-}) => {
+const Register = ({ register, auth: { isAuthenticated, loading } }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     password2: '',
   });
-  const [isCompleted, setComplete] = useState(false);
+  const [isCompleted, setIsComplete] = useState(false);
   const { name, email, password, password2 } = formData;
 
   const onChange = (e) =>
@@ -39,13 +35,9 @@ const Register = ({
       if (password !== password2) {
         return toast.error('Passwords do not match');
       } else {
-        setComplete(true);
-        const res = await register({ name, email, password });
-        if (res) {
-          return setComplete(false);
-        } else {
-          return setComplete(false);
-        }
+        setIsComplete(true);
+        await register({ name, email, password });
+        setIsComplete(false);
       }
     } else {
       return toast.error('Please fill all fields');
@@ -118,9 +110,8 @@ const Register = ({
                 }}
               />
             </div>
-            <Loader size={36} loading={isCompleted} isButton={true} />
 
-            {!isCompleted && (
+            {!isCompleted ? (
               <input
                 type='submit'
                 className='btn btn-blue'
@@ -131,6 +122,8 @@ const Register = ({
                 }}
                 value='Register'
               />
+            ) : (
+              <Loader size={36} isButton={true} />
             )}
           </form>
           <p className='my-1'>

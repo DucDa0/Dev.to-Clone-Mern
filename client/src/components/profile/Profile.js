@@ -81,12 +81,8 @@ const Profile = ({
   const onSubmit = async (e) => {
     e.preventDefault();
     setComplete(true);
-    const res = await createProfile({ ...formData, brand_color: color });
-    if (res) {
-      return setComplete(false);
-    } else {
-      return setComplete(false);
-    }
+    await createProfile({ ...formData, brand_color: color });
+    setComplete(false);
   };
   return (
     <Setting checkPage={location.pathname}>
@@ -322,13 +318,15 @@ const Profile = ({
                   </div>
                 </Fragment>
               )}
-              <Loader size={36} loading={isCompleted} isButton={true} />
-              {!isCompleted && (
+
+              {!isCompleted ? (
                 <input
                   type='submit'
                   value='Save'
                   className='btn btn-dark my-1'
                 />
+              ) : (
+                <Loader size={36} isButton={true} />
               )}
             </form>
           </div>

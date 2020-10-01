@@ -15,11 +15,9 @@ import { Loader } from '../loader/Loader';
 const Forget = ({ forget, auth: { isAuthenticated, loading } }) => {
   const [formData, setFormData] = useState({
     email: '',
-    isCompleted: false,
   });
-
-  const { email, isCompleted } = formData;
-
+  const [isCompleted, setIsCompleted] = useState(false);
+  const { email } = formData;
   const onChange = (e) => setFormData({ ...formData, email: e.target.value });
 
   const onSubmit = async (e) => {
@@ -29,22 +27,9 @@ const Forget = ({ forget, auth: { isAuthenticated, loading } }) => {
     }
 
     if (email) {
-      setFormData({
-        ...formData,
-        isCompleted: true,
-      });
-      const res = await forget({ email });
-      if (res) {
-        return setFormData({
-          ...formData,
-          isCompleted: false,
-        });
-      } else {
-        return setFormData({
-          ...formData,
-          isCompleted: false,
-        });
-      }
+      setIsCompleted(true);
+      await forget({ email });
+      setIsCompleted(false);
     } else {
       return toast.error('Please provide your email');
     }
@@ -75,8 +60,8 @@ const Forget = ({ forget, auth: { isAuthenticated, loading } }) => {
                 }}
               />
             </div>
-            <Loader size={36} loading={isCompleted} isButton={true} />
-            {!isCompleted && (
+
+            {!isCompleted ? (
               <input
                 type='submit'
                 className='btn btn-blue'
@@ -87,6 +72,8 @@ const Forget = ({ forget, auth: { isAuthenticated, loading } }) => {
                 }}
                 value='Confirm'
               />
+            ) : (
+              <Loader size={36} isButton={true} />
             )}
           </form>
         </div>

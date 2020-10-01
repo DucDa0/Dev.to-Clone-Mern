@@ -73,7 +73,6 @@ export const createProfile = (formData) => async (dispatch) => {
       payload: res.data,
     });
     toast.success('Profile Updated');
-    return true;
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -85,7 +84,6 @@ export const createProfile = (formData) => async (dispatch) => {
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
-    return false;
   }
 };
 
@@ -96,7 +94,6 @@ export const deleteAccount = (formData) => async (dispatch) => {
 
     dispatch({ type: CLEAR_PROFILE });
     dispatch({ type: ACCOUNT_DELETED });
-    return true;
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,
@@ -107,6 +104,5 @@ export const deleteAccount = (formData) => async (dispatch) => {
     if (errors) {
       errors.forEach((error) => toast.error(error.msg));
     }
-    return false;
   }
 };

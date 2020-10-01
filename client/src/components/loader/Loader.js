@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PuffLoader from 'react-spinners/PuffLoader';
 
-export const Loader = ({ size, loading, isButton }) => {
+export const Loader = ({ size, isButton }) => {
   return (
     <div
       style={
@@ -16,11 +16,7 @@ export const Loader = ({ size, loading, isButton }) => {
           : { display: 'flex', justifyContent: 'center' }
       }
     >
-      <PuffLoader
-        size={size}
-        color={'#3b49df'}
-        loading={loading === undefined ? true : loading}
-      />
+      <PuffLoader size={size} color={'#3b49df'} loading={true} />
     </div>
   );
 };

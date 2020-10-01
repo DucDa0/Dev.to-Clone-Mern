@@ -101,31 +101,23 @@ const Account = ({
     if (imageUrl && imageUrl.length > 0) {
       const avt = imageUrl;
       setComplete(true);
-      const res = await updateUser({
+      await updateUser({
         email,
         name,
         password: password1,
         password_old: password_old,
         avatar: avt,
       });
-      if (res) {
-        return setComplete(false);
-      } else {
-        return setComplete(false);
-      }
+      setComplete(false);
     } else {
       setComplete(true);
-      const res = await updateUser({
+      await updateUser({
         email,
         name,
         password: password1,
         password_old: password_old,
       });
-      if (res) {
-        return setComplete(false);
-      } else {
-        return setComplete(false);
-      }
+      setComplete(false);
     }
   };
   const handleDeleteAccount = async () => {
@@ -257,13 +249,15 @@ const Account = ({
                   onChange={onChange}
                 />
               </div>
-              <Loader size={36} isButton={true} loading={isCompleted} />
-              {!isCompleted && (
+
+              {!isCompleted ? (
                 <input
                   type='submit'
                   value='Save'
                   className='btn btn-dark my-1'
                 />
+              ) : (
+                <Loader size={36} isButton={true} />
               )}
             </form>
           </div>
@@ -288,15 +282,15 @@ const Account = ({
               <li>allow your username to become available to anyone.</li>
             </ul>
             <div className='my-1'>
-              <Loader size={36} isButton={true} loading={isDelete} />
-
-              {!isDelete && (
+              {!isDelete ? (
                 <button
                   className='btn btn-danger'
                   onClick={handleDeleteAccount}
                 >
                   <i className='fas fa-user-minus' /> Delete My Account
                 </button>
+              ) : (
+                <Loader size={36} isButton={true} />
               )}
             </div>
           </div>

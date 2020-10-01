@@ -75,17 +75,14 @@ function PostEdit({ editPost, match }) {
                 setPublish(true);
                 let cover_image = localStorage.getItem('Cover_Image');
                 let tag_data = JSON.parse(localStorage.getItem('tags'));
-                const res = await editPost(match.params.id, {
+                await editPost(match.params.id, {
                   title,
                   coverImage: !cover_image ? '' : cover_image,
                   content,
                   tags: !tag_data ? [] : tag_data,
                 });
-                if (res) {
-                  setPublish(false);
-                } else {
-                  setPublish(false);
-                }
+                setPublish(false);
+
                 localStorage.removeItem('tags');
                 localStorage.removeItem('Cover_Image');
               }}
@@ -111,13 +108,15 @@ function PostEdit({ editPost, match }) {
                 required
                 value={content}
               />
-              <Loader size={36} loading={publish} isButton={true} />
-              {!publish && (
+
+              {!publish ? (
                 <input
                   type='submit'
                   className='btn btn-dark my-1'
                   value='Save'
                 />
+              ) : (
+                <Loader size={36} isButton={true} />
               )}
             </form>
           </div>

@@ -16,10 +16,9 @@ const Activate = ({ activate, match, auth: { isAuthenticated, loading } }) => {
   const [formData, setFormData] = useState({
     name: '',
     token: '',
-    isActived: false,
-    isProcessing: false,
   });
-
+  const [isActived, setIsActived] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   useEffect(() => {
     let token = match.params.token;
     let { name } = jwt.decode(token);
@@ -28,30 +27,19 @@ const Activate = ({ activate, match, auth: { isAuthenticated, loading } }) => {
       setFormData({ ...formData, name, token });
     }
   }, []);
-  const { name, token, isActived, isProcessing } = formData;
+  const { name, token } = formData;
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (localStorage.token) {
       return window.location.reload(false);
     }
 
-    setFormData({
-      ...formData,
-      isProcessing: true,
-    });
+    setIsProcessing(true);
     const res = await activate({ token });
     if (res) {
-      return setFormData({
-        ...formData,
-        isActived: true,
-        isProcessing: false,
-      });
-    } else {
-      return setFormData({
-        ...formData,
-        isProcessing: false,
-      });
+      setIsActived(true);
     }
+    setIsProcessing(false);
   };
 
   if (isAuthenticated) {
@@ -64,8 +52,7 @@ const Activate = ({ activate, match, auth: { isAuthenticated, loading } }) => {
         <div className='login'>
           <p className='lead'>Welcome {name}</p>
           <form className='form' onSubmit={handleSubmit}>
-            <Loader size={36} loading={isProcessing} isButton={false} />
-            {!isProcessing && (
+            {!isProcessing ? (
               <input
                 className='btn btn-blue'
                 style={{
@@ -77,6 +64,8 @@ const Activate = ({ activate, match, auth: { isAuthenticated, loading } }) => {
                 type='submit'
                 value='Active'
               />
+            ) : (
+              <Loader size={36} isButton={true} />
             )}
           </form>
           {isActived && (

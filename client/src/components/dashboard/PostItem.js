@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // router/redux
@@ -11,8 +11,17 @@ import { deletePost } from '../../actions/post';
 
 // others
 import Moment from 'react-moment';
+import { Loader } from '../loader/Loader';
 function PostItem({ post, deletePost }) {
-  return (
+  const [isProcessing, setIsProcessing] = useState(false);
+  const handleDeletePost = async () => {
+    setIsProcessing(true);
+    await deletePost(post._id);
+    setIsProcessing(false);
+  };
+  return isProcessing ? (
+    <Loader size={46} isButton={false} />
+  ) : (
     <div className='post-list__item bg-white my'>
       <div className='post-list__item-wrap'>
         <div className='item-infor'>
@@ -61,7 +70,7 @@ function PostItem({ post, deletePost }) {
               <i className='far fa-edit' />
             </Link>
             <button
-              onClick={() => deletePost(post._id)}
+              onClick={handleDeletePost}
               type='button'
               className='btn btn-light action-comt'
             >

@@ -15,7 +15,7 @@ import TagsModal from './TagsModal';
 
 // others
 import { MarkdownPreview } from 'react-marked-markdown';
-import PuffLoader from 'react-spinners/PuffLoader';
+import { Loader } from '../loader/Loader';
 
 function PostEditor({ addPost }) {
   const [title, setTitle] = useState('');
@@ -60,17 +60,14 @@ function PostEditor({ addPost }) {
                 setPublish(true);
                 const cover_image = localStorage.getItem('Cover_Image');
                 const tagsData = JSON.parse(localStorage.getItem('tags'));
-                const res = await addPost({
+                await addPost({
                   title,
                   coverImage: !cover_image ? '' : cover_image,
                   content,
                   tags: !tagsData ? [] : tagsData,
                 });
-                if (res) {
-                  setPublish(false);
-                } else {
-                  setPublish(false);
-                }
+                setPublish(false);
+
                 localStorage.removeItem('post');
                 localStorage.removeItem('Cover_Image');
                 localStorage.removeItem('tags');
@@ -105,13 +102,15 @@ function PostEditor({ addPost }) {
                 required
                 value={content}
               />
-              {<PuffLoader size={36} color={'#3b49df'} loading={publish} />}
-              {!publish && (
+              {}
+              {!publish ? (
                 <input
                   type='submit'
                   className='btn btn-dark my-1'
                   value='Publish'
                 />
+              ) : (
+                <Loader size={36} isButton={true} />
               )}
             </form>
           </div>

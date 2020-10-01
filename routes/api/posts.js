@@ -206,7 +206,7 @@ router.get('/', async (req, res) => {
 // @access   Public
 router.get('/discuss-posts', async (req, res) => {
   try {
-    const posts = await Post.find({ tags: '5f6f2988468cdd24307fee86' })
+    const posts = await Post.find({ tags: '5f637b99ef33812ce08e32dd' })
       .sort({ date: -1 })
       .select(['title', 'commentsCount'])
       .limit(5);
@@ -222,7 +222,7 @@ router.get('/discuss-posts', async (req, res) => {
 // @access   Public
 router.get('/news-posts', async (req, res) => {
   try {
-    const posts = await Post.find({ tags: '5f6f2a0e468cdd24307fee93' })
+    const posts = await Post.find({ tags: '5f64174164d4d31b38cdef26' })
       .sort({ date: -1 })
       .select(['title', 'commentsCount'])
       .limit(5);
@@ -238,7 +238,7 @@ router.get('/news-posts', async (req, res) => {
 // @access   Public
 router.get('/help-posts', async (req, res) => {
   try {
-    const posts = await Post.find({ tags: '5f6f2a04468cdd24307fee92' })
+    const posts = await Post.find({ tags: '5f64172e64d4d31b38cdef25' })
       .sort({ date: -1 })
       .select(['title', 'commentsCount'])
       .limit(5);

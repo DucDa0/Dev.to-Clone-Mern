@@ -199,7 +199,7 @@ export const deletePost = (id) => async (dispatch) => {
         type: POST_ERROR,
         payload: { msg: err.response.statusText, status: err.response.status },
       });
-      return toast.error(err.response.data.msg);
+      toast.error(err.response.data.msg);
     }
   }
 };
@@ -218,7 +218,6 @@ export const addPost = (formData) => async (dispatch) => {
       payload: res.data,
     });
     toast.success('Publish post complete!');
-    return true;
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -230,7 +229,6 @@ export const addPost = (formData) => async (dispatch) => {
     if (errors) {
       errors.forEach((error) => toast.error(error.msg));
     }
-    return false;
   }
 };
 
@@ -243,7 +241,6 @@ export const editPost = (id, formData) => async (dispatch) => {
       payload: res.data,
     });
     toast.success('Edit post complete!');
-    return true;
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -255,7 +252,6 @@ export const editPost = (id, formData) => async (dispatch) => {
     if (errors) {
       errors.forEach((error) => toast.error(error.msg));
     }
-    return false;
   }
 };
 
@@ -271,7 +267,6 @@ export const addComment = (postId, formData) => async (dispatch) => {
       },
     });
     await api.post(`/posts/comment/${postId}`, formData);
-    return true;
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -283,7 +278,6 @@ export const addComment = (postId, formData) => async (dispatch) => {
     if (errors) {
       errors.forEach((error) => toast.error(error.msg));
     }
-    return false;
   }
 };
 

@@ -13,10 +13,9 @@ const ActivateNewEmail = ({ activateNewEmail, match }) => {
   const [formData, setFormData] = useState({
     name: '',
     token: '',
-    isActived: false,
-    isProcessing: false,
   });
-
+  const [isActived, setIsActived] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   useEffect(() => {
     let token = match.params.token;
     let { name } = jwt.decode(token);
@@ -25,26 +24,15 @@ const ActivateNewEmail = ({ activateNewEmail, match }) => {
       setFormData({ ...formData, name, token });
     }
   }, []);
-  const { name, token, isActived, isProcessing } = formData;
+  const { name, token } = formData;
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormData({
-      ...formData,
-      isProcessing: true,
-    });
+    setIsProcessing(true);
     const res = await activateNewEmail({ token });
     if (res) {
-      return setFormData({
-        ...formData,
-        isActived: true,
-        isProcessing: false,
-      });
-    } else {
-      return setFormData({
-        ...formData,
-        isProcessing: false,
-      });
+      setIsActived(true);
     }
+    setIsProcessing(false);
   };
 
   return (
@@ -53,8 +41,7 @@ const ActivateNewEmail = ({ activateNewEmail, match }) => {
         <div className='login'>
           <p className='lead'>Hi! {name}</p>
           <form className='form' onSubmit={handleSubmit}>
-            <Loader size={36} loading={isProcessing} isButton={false} />
-            {!isProcessing && (
+            {!isProcessing ? (
               <input
                 className='btn btn-blue'
                 style={{
@@ -66,6 +53,8 @@ const ActivateNewEmail = ({ activateNewEmail, match }) => {
                 type='submit'
                 value='Verify'
               />
+            ) : (
+              <Loader size={36} isButton={true} />
             )}
           </form>
           {isActived && (

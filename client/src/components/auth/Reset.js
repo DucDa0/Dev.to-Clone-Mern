@@ -16,10 +16,9 @@ const Reset = ({ reset, match, auth: { isAuthenticated, loading } }) => {
     password1: '',
     password2: '',
     token: '',
-    isCompleted: false,
   });
-
-  const { password1, password2, token, isCompleted } = formData;
+  const [isCompleted, setIsComplete] = useState(false);
+  const { password1, password2, token } = formData;
   useEffect(() => {
     let token = match.params.token;
     if (token) {
@@ -41,11 +40,7 @@ const Reset = ({ reset, match, auth: { isAuthenticated, loading } }) => {
           resetPasswordLink: token,
         });
         if (res) {
-          return setFormData({
-            ...formData,
-            isCompleted: true,
-          });
-        } else {
+          setIsComplete(true);
         }
       } else {
         return toast.error("Passwords don't matches");
