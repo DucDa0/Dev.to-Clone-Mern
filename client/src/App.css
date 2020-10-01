@@ -1890,6 +1890,7 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
     background-color: #eef0f1;
     border-top: 1px solid #ddd;
     width: 100%;
+    margin-top: 0;
   }
   .more-action {
     position: unset;
