@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
-import { getTagById, getPostsByTagId } from '../../actions/tags';
+import { getTagById } from '../../actions/tags';
 import { followTags } from '../../actions/auth';
 
 import ActionFollow from './ActionFollow';
@@ -11,12 +11,10 @@ import LoginPopUp from '../auth/LoginPopUp';
 import Posts from './Posts';
 
 import { Loader } from '../loader/Loader';
-
 function TagHome({
   match,
-  tag: { tag, posts, loading },
+  tag: { tag, loading },
   getTagById,
-  getPostsByTagId,
   followTags,
   location,
   _auth,
@@ -32,9 +30,8 @@ function TagHome({
   };
   useEffect(() => {
     getTagById(match.params.id);
-    getPostsByTagId(match.params.id);
-  }, [getTagById, getPostsByTagId, match.params.id]);
-  return loading || !tag || !posts ? (
+  }, [getTagById, match.params.id]);
+  return loading || !tag ? (
     <Loader size={46} isButton={false} />
   ) : (
     <div className='tag-home-container container'>
@@ -72,7 +69,7 @@ function TagHome({
           </div>
         </div>
 
-        <Posts posts={posts} />
+        <Posts tagId={match.params.id} />
       </div>
     </div>
   );
@@ -80,7 +77,6 @@ function TagHome({
 TagHome.propTypes = {
   tag: PropTypes.object.isRequired,
   getTagById: PropTypes.func.isRequired,
-  getPostsByTagId: PropTypes.func.isRequired,
   _auth: PropTypes.object.isRequired,
   followTags: PropTypes.func.isRequired,
 };
@@ -91,6 +87,5 @@ const mapStateToProps = (state) => ({
 });
 export default connect(mapStateToProps, {
   getTagById,
-  getPostsByTagId,
   followTags,
 })(TagHome);

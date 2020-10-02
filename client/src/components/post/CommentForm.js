@@ -12,6 +12,7 @@ import mongoose from 'mongoose';
 
 // others
 import moment from 'moment';
+import { toast } from 'react-toastify';
 const CommentForm = ({ postId, addComment, isAuth, setAuth, auth }) => {
   const [text, setText] = useState('');
   const handleForm = () => {
@@ -28,6 +29,8 @@ const CommentForm = ({ postId, addComment, isAuth, setAuth, auth }) => {
         className='form'
         onSubmit={(e) => {
           e.preventDefault();
+          if (!text || text.length === 0)
+            return toast.error('Text is required!');
           addComment(postId, {
             _id: mongoose.Types.ObjectId(),
             name: auth.user.name,
@@ -46,7 +49,9 @@ const CommentForm = ({ postId, addComment, isAuth, setAuth, auth }) => {
           name='text'
           cols='30'
           rows='8'
-          placeholder='Login to post comments'
+          placeholder={
+            isAuth ? 'Post your comments here' : 'Login to post comments'
+          }
           value={text}
           onChange={(e) => {
             if (!isAuth) {

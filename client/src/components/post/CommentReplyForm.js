@@ -12,6 +12,7 @@ import mongoose from 'mongoose';
 
 // others
 import moment from 'moment';
+import { toast } from 'react-toastify';
 const CommentReplyForm = ({
   setReply,
   tagName,
@@ -30,6 +31,8 @@ const CommentReplyForm = ({
           className='form'
           onSubmit={(e) => {
             e.preventDefault();
+            if (!text || text.length === 0)
+              return toast.error('Text is required!');
             replyComment(postId, comtId, {
               _id: mongoose.Types.ObjectId(),
               text,

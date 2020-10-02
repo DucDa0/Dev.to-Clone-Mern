@@ -14,7 +14,6 @@ import Welcome from './Welcome';
 import { Notify, Chat, Menu } from '../icons/icons';
 
 // action
-import { getPosts } from '../../actions/post';
 import { getNotifications } from '../../actions/notify';
 
 // api
@@ -42,7 +41,6 @@ const Navbar = ({
           <div className='logo'>
             <Link
               onClick={() => {
-                store.dispatch(getPosts());
                 if (
                   localStorage.token &&
                   api.defaults.headers.common['x-auth-token']

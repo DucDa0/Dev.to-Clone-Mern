@@ -1,47 +1,67 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import PostFeed from '../posts/PostFeed';
 import LoginPopUp from '../auth/LoginPopUp';
 import TopFeedFilter from '../posts/TopFeedFilter';
 
-import moment from 'moment';
+import {
+  getPostsByTagId,
+  getPostsByTagId_Year,
+  getPostsByTagId_Date,
+  getPostsByTagId_Month,
+} from '../../actions/tags';
 
-const Posts = ({ posts }) => {
+import { Loader } from '../loader/Loader';
+
+const Posts = ({
+  posts,
+  tagId,
+  getPostsByTagId,
+  getPostsByTagId_Year,
+  getPostsByTagId_Date,
+  getPostsByTagId_Month,
+}) => {
   const [auth, setAuth] = useState(false);
-  const [filterStatus, setFilterStatus] = useState('feed');
-  // get d/m/y from data
-  const getMonthValue = (value) => {
-    const res = new Date(value);
-    return res.getMonth() + 1;
-  };
-  const getDateValue = (value) => {
-    const res = new Date(value);
-    return res.getDate();
-  };
-  const getYearValue = (value) => {
-    const res = new Date(value);
-    return res.getFullYear();
-  };
+  const [filterStatus, setFilterStatus] = useState('latest');
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    async function getData() {
+      switch (filterStatus) {
+        case 'date':
+          setLoading(true);
+          await getPostsByTagId_Date(tagId);
+          setLoading(false);
+          break;
+        case 'month':
+          setLoading(true);
+          await getPostsByTagId_Month(tagId);
+          setLoading(false);
+          break;
+        case 'year':
+          setLoading(true);
+          await getPostsByTagId_Year(tagId);
+          setLoading(false);
+          break;
+        default:
+          setLoading(true);
+          await getPostsByTagId(tagId);
+          setLoading(false);
+          break;
+      }
+    }
+    getData();
+  }, [
+    getPostsByTagId,
+    getPostsByTagId_Date,
+    getPostsByTagId_Month,
+    getPostsByTagId_Year,
+    tagId,
+    filterStatus,
+  ]);
 
-  // get d/m/y now
-  const Year = () => {
-    return moment().year();
-  };
-  const Dates = () => {
-    return moment().date();
-  };
-  const Month = () => {
-    return moment().month() + 1;
-  };
-  const dataFilter =
-    filterStatus === 'date'
-      ? posts.filter((post) => getDateValue(post.date) === Dates())
-      : filterStatus === 'month'
-      ? posts.filter((post) => getMonthValue(post.date) === Month())
-      : filterStatus === 'year'
-      ? posts.filter((post) => getYearValue(post.date) === Year())
-      : posts;
   return (
     <Fragment>
       {auth ? <LoginPopUp setAuth={setAuth} /> : null}
@@ -56,11 +76,15 @@ const Posts = ({ posts }) => {
               setFilterStatus={setFilterStatus}
             />
           </div>
-          <Fragment>
-            {dataFilter.map((post) => (
-              <PostFeed key={post._id} post={post} setAuth={setAuth} />
-            ))}
-          </Fragment>
+          {!posts || loading ? (
+            <Loader size={46} isButton={false} />
+          ) : (
+            <Fragment>
+              {posts.map((post) => (
+                <PostFeed key={post._id} post={post} setAuth={setAuth} />
+              ))}
+            </Fragment>
+          )}
         </div>
         <div></div>
       </div>
@@ -70,6 +94,17 @@ const Posts = ({ posts }) => {
 
 Posts.propTypes = {
   posts: PropTypes.array.isRequired,
+  getPostsByTagId: PropTypes.func.isRequired,
+  getPostsByTagId_Date: PropTypes.func.isRequired,
+  getPostsByTagId_Month: PropTypes.func.isRequired,
+  getPostsByTagId_Year: PropTypes.func.isRequired,
 };
-
-export default Posts;
+const mapStateToProps = (state) => ({
+  posts: state.tags.posts,
+});
+export default connect(mapStateToProps, {
+  getPostsByTagId,
+  getPostsByTagId_Date,
+  getPostsByTagId_Month,
+  getPostsByTagId_Year,
+})(Posts);

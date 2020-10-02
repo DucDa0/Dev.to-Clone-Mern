@@ -3,6 +3,7 @@ const router = express.Router();
 const checkObjectId = require('../../middleware/checkObjectId');
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
+const moment = require('moment');
 
 const Post = require('../../models/Post');
 const User = require('../../models/User');
@@ -185,11 +186,74 @@ router.put(
 );
 
 // @route    GET api/posts
-// @desc     Get all posts
+// @desc     Get all posts(lastest)
 // @access   Public
 router.get('/', async (req, res) => {
   try {
     const posts = await Post.find({})
+      .sort({ date: -1 })
+      .populate('user', ['avatar', 'name'])
+      .populate('tags', ['tagName']);
+    const usersCount = await User.estimatedDocumentCount();
+    return res.json({ posts, usersCount });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route    GET api/posts
+// @desc     Get  posts by date
+// @access   Public
+router.get('/date', async (req, res) => {
+  try {
+    let today = moment().startOf('day');
+    let tomorrow = moment(today).endOf('day');
+    const posts = await Post.find({
+      date: { $gte: today.toDate(), $lt: tomorrow.toDate() },
+    })
+      .sort({ date: -1 })
+      .populate('user', ['avatar', 'name'])
+      .populate('tags', ['tagName']);
+    const usersCount = await User.estimatedDocumentCount();
+    return res.json({ posts, usersCount });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route    GET api/posts
+// @desc     Get  posts by month
+// @access   Public
+router.get('/month', async (req, res) => {
+  try {
+    let today = moment().startOf('month');
+    let tomorrow = moment(today).endOf('month');
+    const posts = await Post.find({
+      date: { $gte: today.toDate(), $lte: tomorrow.toDate() },
+    })
+      .sort({ date: -1 })
+      .populate('user', ['avatar', 'name'])
+      .populate('tags', ['tagName']);
+    const usersCount = await User.estimatedDocumentCount();
+    return res.json({ posts, usersCount });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route    GET api/posts
+// @desc     Get  posts by year
+// @access   Public
+router.get('/year', async (req, res) => {
+  try {
+    let today = moment().startOf('year');
+    let tomorrow = moment(today).endOf('year');
+    const posts = await Post.find({
+      date: { $gte: today.toDate(), $lte: tomorrow.toDate() },
+    })
       .sort({ date: -1 })
       .populate('user', ['avatar', 'name'])
       .populate('tags', ['tagName']);

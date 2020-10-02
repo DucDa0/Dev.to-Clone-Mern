@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const moment = require('moment');
 
 const Tag = require('../../models/Tags');
 const Post = require('../../models/Post');
@@ -72,11 +73,83 @@ router.get('/:id', checkObjectId('id'), async (req, res) => {
 });
 
 // @route    GET api/tags/posts/:id
-// @desc     get posts by tag id
+// @desc     get posts by tag id, latest
 // @access   Public
 router.get('/posts/:id', checkObjectId('id'), async (req, res) => {
   try {
     const posts = await Post.find({ tags: req.params.id })
+      .sort({ date: -1 })
+      .populate('user', ['avatar', 'name'])
+      .populate('tags', ['tagName']);
+    if (!posts) {
+      return res.status(404).json({ msg: 'Posts not found!' });
+    }
+    return res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route    GET api/tags/posts/date/:id
+// @desc     get posts by tag id, date
+// @access   Public
+router.get('/posts/date/:id', checkObjectId('id'), async (req, res) => {
+  try {
+    let today = moment().startOf('day');
+    let tomorrow = moment(today).endOf('day');
+    const posts = await Post.find({
+      tags: req.params.id,
+      date: { $gte: today.toDate(), $lt: tomorrow.toDate() },
+    })
+      .sort({ date: -1 })
+      .populate('user', ['avatar', 'name'])
+      .populate('tags', ['tagName']);
+    if (!posts) {
+      return res.status(404).json({ msg: 'Posts not found!' });
+    }
+    return res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route    GET api/tags/posts/month/:id
+// @desc     get posts by tag id, month
+// @access   Public
+router.get('/posts/month/:id', checkObjectId('id'), async (req, res) => {
+  try {
+    let today = moment().startOf('month');
+    let tomorrow = moment(today).endOf('month');
+    const posts = await Post.find({
+      tags: req.params.id,
+      date: { $gte: today.toDate(), $lte: tomorrow.toDate() },
+    })
+      .sort({ date: -1 })
+      .populate('user', ['avatar', 'name'])
+      .populate('tags', ['tagName']);
+    if (!posts) {
+      return res.status(404).json({ msg: 'Posts not found!' });
+    }
+    return res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route    GET api/tags/posts/year/:id
+// @desc     get posts by tag id, year
+// @access   Public
+router.get('/posts/year/:id', checkObjectId('id'), async (req, res) => {
+  try {
+    let today = moment().startOf('year');
+    let tomorrow = moment(today).endOf('year');
+    const posts = await Post.find({
+      tags: req.params.id,
+      date: { $gte: today.toDate(), $lte: tomorrow.toDate() },
+    })
       .sort({ date: -1 })
       .populate('user', ['avatar', 'name'])
       .populate('tags', ['tagName']);

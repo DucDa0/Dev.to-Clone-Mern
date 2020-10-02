@@ -24,10 +24,61 @@ import {
   USER_EDIT_POST,
 } from './types';
 
-// Get all posts
+// Get all latest posts
 export const getPosts = () => async (dispatch) => {
   try {
     const res = await api.get('/posts');
+
+    dispatch({
+      type: GET_POSTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get posts by date
+export const getPostsByDate = () => async (dispatch) => {
+  try {
+    const res = await api.get('/posts/date');
+
+    dispatch({
+      type: GET_POSTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get posts by month
+export const getPostsByMonth = () => async (dispatch) => {
+  try {
+    const res = await api.get('/posts/month');
+
+    dispatch({
+      type: GET_POSTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get posts by year
+export const getPostsByYear = () => async (dispatch) => {
+  try {
+    const res = await api.get('/posts/year');
 
     dispatch({
       type: GET_POSTS,

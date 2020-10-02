@@ -10,7 +10,6 @@ import {
   EDIT_REPLY_COMMENT,
   REPLY_COMMENT,
   REMOVE_REPLY_COMMENT,
-  SET_LOADING,
   CLEAR_POST,
   CLEAR_POSTS,
 } from '../actions/types';
@@ -37,11 +36,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         posts: null,
-      };
-    case SET_LOADING:
-      return {
-        ...state,
-        loading: payload,
       };
     case GET_POSTS:
       return {

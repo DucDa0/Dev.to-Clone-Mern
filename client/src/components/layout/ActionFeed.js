@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 // router/redux
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import store from '../../store';
 
 const ActionFeed = ({ isAuthenticated, user }) => {
   return (
@@ -17,7 +16,6 @@ const ActionFeed = ({ isAuthenticated, user }) => {
                 style={{ color: 'royalblue', fontWeight: '600' }}
                 className='action-feed_s'
                 to='/profile/me'
-                onClick={() => store.dispatch({ type: 'CLEAR_DATA' })}
               >
                 {'@' + user.name}
               </Link>

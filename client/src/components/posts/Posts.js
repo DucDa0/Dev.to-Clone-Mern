@@ -5,7 +5,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // action
-import { getPosts } from '../../actions/post';
+import {
+  getPosts,
+  getPostsByDate,
+  getPostsByMonth,
+  getPostsByYear,
+} from '../../actions/post';
 
 // component
 import PostFeed from './PostFeed';
@@ -23,12 +28,14 @@ import { LeftSideFeed } from '../icons/icons';
 
 // others
 import { Loader } from '../loader/Loader';
-import moment from 'moment';
 
 const Posts = ({
   _auth,
   getPosts,
-  post: { posts, loading },
+  getPostsByDate,
+  getPostsByMonth,
+  getPostsByYear,
+  post: { posts },
   location,
   usersCount,
 }) => {
@@ -36,42 +43,35 @@ const Posts = ({
   const [showRSide, setShowRSide] = useState(false);
   const [showLSide, setShowLSide] = useState(false);
   const [filterStatus, setFilterStatus] = useState('latest');
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    getPosts();
-  }, [getPosts]);
+    async function getData() {
+      switch (filterStatus) {
+        case 'date':
+          setLoading(true);
+          await getPostsByDate();
+          setLoading(false);
+          break;
+        case 'month':
+          setLoading(true);
+          await getPostsByMonth();
+          setLoading(false);
+          break;
+        case 'year':
+          setLoading(true);
+          await getPostsByYear();
+          setLoading(false);
+          break;
+        default:
+          setLoading(true);
+          await getPosts();
+          setLoading(false);
+          break;
+      }
+    }
+    getData();
+  }, [getPosts, getPostsByDate, getPostsByMonth, getPostsByYear, filterStatus]);
 
-  // get d/m/y from data
-  const getMonthValue = (value) => {
-    const res = new Date(value);
-    return res.getMonth() + 1;
-  };
-  const getDateValue = (value) => {
-    const res = new Date(value);
-    return res.getDate();
-  };
-  const getYearValue = (value) => {
-    const res = new Date(value);
-    return res.getFullYear();
-  };
-
-  // get d/m/y now
-  const Year = () => {
-    return moment().year();
-  };
-  const Dates = () => {
-    return moment().date();
-  };
-  const Month = () => {
-    return moment().month() + 1;
-  };
-  const dataFilter =
-    filterStatus === 'date'
-      ? posts.filter((post) => getDateValue(post.date) === Dates())
-      : filterStatus === 'month'
-      ? posts.filter((post) => getMonthValue(post.date) === Month())
-      : filterStatus === 'year'
-      ? posts.filter((post) => getYearValue(post.date) === Year())
-      : posts;
   const handleClickSide = (e) => {
     if (e.target.classList.contains('backdrop-side')) {
       setShowRSide(false);
@@ -116,7 +116,7 @@ const Posts = ({
             <Loader size={46} isButton={false} />
           ) : (
             <Fragment>
-              {dataFilter.map((post, index) => (
+              {posts.map((post, index) => (
                 <PostFeed
                   index={index}
                   path={location.pathname}
@@ -150,6 +150,9 @@ const Posts = ({
 
 Posts.propTypes = {
   getPosts: PropTypes.func.isRequired,
+  getPostsByDate: PropTypes.func.isRequired,
+  getPostsByMonth: PropTypes.func.isRequired,
+  getPostsByYear: PropTypes.func.isRequired,
   getPopularTags: PropTypes.func,
   post: PropTypes.object.isRequired,
   usersCount: PropTypes.number,
@@ -162,4 +165,9 @@ const mapStateToProps = (state) => ({
   _auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getPosts })(Posts);
+export default connect(mapStateToProps, {
+  getPosts,
+  getPostsByDate,
+  getPostsByMonth,
+  getPostsByYear,
+})(Posts);

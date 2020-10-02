@@ -90,3 +90,54 @@ export const getPostsByTagId = (id) => async (dispatch) => {
     return toast.error(err.response.data.msg);
   }
 };
+
+// get posts by tag id, date
+export const getPostsByTagId_Date = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/tags/posts/date/${id}`);
+    dispatch({
+      type: GET_TAG_POSTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: TAGS_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    return toast.error(err.response.data.msg);
+  }
+};
+
+// get posts by tag id, month
+export const getPostsByTagId_Month = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/tags/posts/month/${id}`);
+    dispatch({
+      type: GET_TAG_POSTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: TAGS_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    return toast.error(err.response.data.msg);
+  }
+};
+
+// get posts by tag id, year
+export const getPostsByTagId_Year = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/tags/posts/year/${id}`);
+    dispatch({
+      type: GET_TAG_POSTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: TAGS_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    return toast.error(err.response.data.msg);
+  }
+};
