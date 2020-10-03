@@ -13,8 +13,11 @@ import CommentNotify from './CommentNotify';
 import FollowNotify from './FollowNotify';
 import PostNotify from './PostNotify';
 
+import { Loader } from '../loader/Loader';
+
 function NotifyHome({ markNotifications, getNotifications, notifications }) {
   const [filterValue, setFilterValue] = useState('all');
+  const [loading, setLoading] = useState(true);
   const filterData =
     filterValue === 'comment'
       ? notifications.filter(
@@ -25,12 +28,16 @@ function NotifyHome({ markNotifications, getNotifications, notifications }) {
       : notifications;
   useEffect(() => {
     async function loadData() {
+      setLoading(true);
       await getNotifications();
       await markNotifications();
+      setLoading(false);
     }
     loadData();
   }, [markNotifications, getNotifications]);
-  return (
+  return loading ? (
+    <Loader size={46} isButton={false} />
+  ) : (
     <div className='notify-container container'>
       <div className='notify-select'>
         <button
