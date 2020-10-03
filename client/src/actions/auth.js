@@ -12,6 +12,7 @@ import {
   FOLLOW_TAGS,
   UNFOLLOW_TAGS,
 } from './types';
+import { getNotifications } from './notify';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
@@ -182,6 +183,7 @@ export const login = (email, password) => async (dispatch) => {
     });
 
     dispatch(loadUser());
+    store.dispatch(getNotifications());
   } catch (err) {
     const errors = err.response.data.errors;
 
