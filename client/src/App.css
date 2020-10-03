@@ -1725,6 +1725,13 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   .reaction-notify {
     border-radius: unset;
   }
+  .tag-home .my {
+    margin: 0;
+    border-top: 1px solid #e6e6e6;
+  }
+  .tag-home .my:last-child {
+    border-bottom: 1px solid #e6e6e6;
+  }
 }
 /* Tablet  */
 @media (min-width: 740px) and (max-width: 1023px) {
@@ -1782,6 +1789,13 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   .left-side-feed,
   .feed-left {
     display: none;
+  }
+  .post-articles .my {
+    margin: 0;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .top-feed {
+    margin-bottom: 0.5rem;
   }
   .post.feed {
     grid-template-columns: 1fr;
@@ -1865,6 +1879,9 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   }
   .tag-home__header h1 {
     font-size: 1.4rem;
+  }
+  .tag-home {
+    padding: 0 0.5rem;
   }
   .tag-home-container.container {
     padding: 0;
@@ -2088,9 +2105,18 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   .dashboard-container.container {
     padding: 0;
   }
-  .post-list__item,
+  .post-list__item {
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .post-list__item:first-child {
+    border-top: 1px solid #e6e6e6;
+  }
+
   .followers__main .followers__item {
-    border-radius: unset;
+    margin: 0 0.5rem;
   }
   .dashboard__title,
   .post-dashboard__head h3,

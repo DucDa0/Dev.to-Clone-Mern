@@ -94,7 +94,7 @@ const Posts = ({
             </div>
           </div>
         </div>
-        <div className='my'>
+        <div className='my post-articles'>
           <div className='top-feed'>
             <div
               onClick={() => {
