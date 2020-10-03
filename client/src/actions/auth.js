@@ -177,13 +177,13 @@ export const login = (email, password) => async (dispatch) => {
   try {
     const res = await api.post('/auth', body);
 
-    dispatch({
+    await dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
 
-    dispatch(loadUser());
-    store.dispatch(getNotifications());
+    await dispatch(loadUser());
+    await dispatch(getNotifications());
   } catch (err) {
     const errors = err.response.data.errors;
 
