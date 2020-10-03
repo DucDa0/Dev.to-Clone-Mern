@@ -72,7 +72,7 @@ const Account = ({
       try {
         const compressedFile = await imageCompression(selected, options);
         new Compressor(compressedFile, {
-          quality: 0.6,
+          quality: 0.8,
           success(result) {
             setFile(result);
             setError('');
