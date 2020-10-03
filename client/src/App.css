@@ -16,7 +16,7 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   background-color: #eef0f1;
@@ -258,10 +258,10 @@ a {
   color: var(--dark-color);
 }
 
-.form input[type='text'],
-.form input[type='email'],
-.form input[type='password'],
-.form input[type='date'],
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"],
+.form input[type="date"],
 .form select,
 .form textarea {
   display: block;
@@ -271,7 +271,7 @@ a {
   border: 1px solid #ddd;
 }
 
-.form input[type='submit'],
+.form input[type="submit"],
 button {
   font: inherit;
 }
@@ -279,9 +279,9 @@ button {
   transition: all 0.1s ease-in-out;
   outline: none;
 }
-input[type='text'],
-input[type='email'],
-input[type='password'] {
+input[type="text"],
+input[type="email"],
+input[type="password"] {
   transition: all 0.1s ease-in-out;
   outline: none;
   padding: 3px 0px 3px 3px;
@@ -293,9 +293,9 @@ input[type='password'] {
   border-right: 2px solid var(--mainstream-color);
   border-bottom: 2px solid var(--mainstream-color);
 }
-input[type='text']:focus,
-input[type='email']:focus,
-input[type='password']:focus {
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
   border-top: 1px solid var(--mainstream-color);
   border-left: 1px solid var(--mainstream-color);
   border-right: 2px solid var(--mainstream-color);
@@ -1054,7 +1054,7 @@ notfound {
 }
 
 .notfound .notfound-404 h1 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1075,7 +1075,7 @@ notfound {
 }
 
 .notfound .notfound-404 h3 {
-  font-family: 'Cabin', sans-serif;
+  font-family: "Cabin", sans-serif;
   position: relative;
   font-size: 16px;
   font-weight: 700;
@@ -1087,7 +1087,7 @@ notfound {
 }
 
 .notfound h2 {
-  font-family: 'Cabin', sans-serif;
+  font-family: "Cabin", sans-serif;
   font-size: 20px;
   font-weight: 400;
   text-transform: uppercase;
@@ -1192,7 +1192,7 @@ notfound {
 
 .me-work {
   font-size: 0.9rem;
-  padding: 18px;
+  padding: 1rem 0 0 0;
   border-top: 1px solid #ddd;
 }
 .me-work__wrap {
@@ -1557,7 +1557,7 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 .editor-title,
 .editor-main,
 .result-area {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   box-shadow: rgba(8, 9, 10, 0.1) 0px 0px 0px 1px;
   background-color: #fff;
   outline: none;
@@ -2037,7 +2037,7 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   .me__info {
     align-items: flex-start;
     margin-top: 1.3rem;
-    padding: 0 12px 12px;
+    padding: 0;
   }
   .me__info .me-name {
     font-size: 1.2rem;
@@ -2075,6 +2075,10 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   .me-work__wrap .me-work__item {
     align-items: flex-start;
     margin: 0.5rem 0;
+  }
+  .me-bio,
+  .me-meta {
+    padding: 0.5rem 0;
   }
   /* settings */
   .setting-container.container {
