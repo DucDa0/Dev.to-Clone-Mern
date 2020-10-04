@@ -13,6 +13,7 @@ const nodemailer = require('nodemailer');
 const { errorHandler } = require('../../helpers/dbErrorHandling');
 const {
   validSign,
+  validUpdateUser,
   forgotPasswordValidator,
   resetPasswordValidator,
 } = require('../../helpers/valid');
@@ -311,7 +312,7 @@ router.put('/password/reset', resetPasswordValidator, async (req, res) => {
 // @route    PUT api/users/update
 // @desc     Update user
 // @access   Private
-router.put('/update', auth, async (req, res) => {
+router.put('/update', [auth, validUpdateUser], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -331,28 +332,28 @@ router.put('/update', auth, async (req, res) => {
           .json({ errors: [{ msg: 'Old password is wrong!' }] });
       }
     }
-
-    if (!email) {
-      return res.status(400).json({ errors: [{ msg: 'Email is required!' }] });
-    } else {
+    if (email) {
       user.email = oldMail;
     }
-    if (!name) {
-      return res.status(400).json({ errors: [{ msg: 'Name is required!' }] });
-    } else {
+    if (name) {
       user.name = name;
     }
 
     if (password) {
-      if (password.length < 6) {
-        return res.status(400).json({
-          errors: [{ msg: 'Password should be min 6 characters long' }],
-        });
-      } else {
-        const salt = await bcrypt.genSalt(10);
-
-        user.password = await bcrypt.hash(password, salt);
+      if (password.length < 6 || password.length > 32) {
+        return res
+          .status(400)
+          .json({
+            errors: [{ msg: 'Password must be between 6 to 32 characters' }],
+          });
       }
+      if (!/\d/.test(password)) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Password must contain a number' }] });
+      }
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
     }
     if (avatar) {
       user.avatar = avatar;

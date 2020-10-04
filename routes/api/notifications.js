@@ -33,7 +33,7 @@ router.get('/', auth, async (req, res) => {
 router.put('/mark_notifications', auth, async (req, res) => {
   try {
     await Notification.updateMany(
-      { me: req.user.id },
+      { me: req.user.id, isSeen: false },
       {
         isSeen: true,
       }
