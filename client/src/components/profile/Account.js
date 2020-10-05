@@ -140,8 +140,8 @@ const Account = ({
       {loading || !user ? (
         <Loader size={46} isButton={false} />
       ) : (
-        <div className='main-setting'>
-          <div className='main-setting__dashboard  bg-white'>
+        <div className='main-setting bg-white'>
+          <div className='main-setting__dashboard'>
             <form className='form' onSubmit={onSubmit}>
               <label htmlFor='email'>Email</label>
               <div className='form-group form-fix'>

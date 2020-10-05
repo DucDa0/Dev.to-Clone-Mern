@@ -892,6 +892,7 @@ li:hover .action-feed_s {
 }
 .setting-title {
   padding: 0 4rem;
+  word-break: break-word;
 }
 .side-setting a:hover {
   color: var(--mainstream-color);
@@ -2103,7 +2104,8 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
     margin: auto;
   }
   .setting-title {
-    margin-left: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
   /* dashboard */
   .post-list__item-wrap {
