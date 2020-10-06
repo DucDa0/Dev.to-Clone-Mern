@@ -192,6 +192,7 @@ const Account = ({
                     height: '40px',
                     backgroundColor: '#f9fafa',
                     marginLeft: '20px',
+                    width: '100%',
                   }}
                   onChange={changeHandler}
                 />

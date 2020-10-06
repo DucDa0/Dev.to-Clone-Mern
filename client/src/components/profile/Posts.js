@@ -27,12 +27,10 @@ const Posts = ({ posts, profile_data }) => {
           </div>
         </div>
 
-        <div>
-          <Fragment>
-            {posts.map((post) => (
-              <PostFeed key={post._id} post={post} setAuth={setAuth} />
-            ))}
-          </Fragment>
+        <div className='post-profile__main'>
+          {posts.map((post) => (
+            <PostFeed key={post._id} post={post} setAuth={setAuth} />
+          ))}
         </div>
         <div className='right-side-profile__wrap'>
           <div className='right-side-profile p-1 my-1'></div>

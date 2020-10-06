@@ -51,7 +51,7 @@ const Navbar = ({
               to='/'
             >
               <i className='fas fa-code' />
-              <span>DevCommunity</span>
+              <span> DevCommunity</span>
             </Link>
           </div>
           <div className='header-search_bar'>

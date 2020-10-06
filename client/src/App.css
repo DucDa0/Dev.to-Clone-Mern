@@ -1692,6 +1692,13 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   .left-side-profile .left-side-profile__posts {
     margin: 0.75rem 0 !important;
   }
+  .post-profile__main .my {
+    margin: 0;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .post-profile__main .my:first-child {
+    border-top: 1px solid #e6e6e6;
+  }
   /* Dash board */
   .dashboard__content {
     grid-template-columns: 1fr;
