@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // router/redux
@@ -22,33 +22,10 @@ const PostItem = ({
   addLike,
   addBookmarks,
   auth,
-  post: {
-    _id,
-    title,
-    coverImage,
-    likes,
-    bookmarks,
-    tags,
-    content,
-    user,
-    likesCount,
-    bookmarksCount,
-    date,
-  },
+  post: { _id, title, coverImage, likes, bookmarks, tags, content, user, date },
   profile,
   setAuth,
 }) => {
-  const [likesState, setLikes] = useState(likesCount);
-  const [bookmarksState, setBookMarks] = useState(bookmarksCount);
-
-  const incLikes = () => setLikes(likesState + 1);
-  const decLikes = () => setLikes(likesState - 1);
-  const incBookMarks = () => setBookMarks(bookmarksState + 1);
-  const decBookMarks = () => setBookMarks(bookmarksState - 1);
-  useEffect(() => {
-    setLikes(likesCount);
-    setBookMarks(bookmarksCount);
-  }, [likesCount, bookmarksCount]);
   const handleLikeAction = () => {
     if (!auth.isAuthenticated) {
       return setAuth(true);
@@ -65,19 +42,14 @@ const PostItem = ({
       return setAuth(false);
     }
   };
+  console.log('Post');
   return (
     <div className='post py post-main'>
       <ActionPostItem
         handleBookmarksAction={handleBookmarksAction}
         handleLikeAction={handleLikeAction}
         likedState={!auth.user ? null : likes.includes(auth.user._id)}
-        likesState={likesState}
         bookmarkedState={!auth.user ? null : bookmarks.includes(auth.user._id)}
-        bookmarksState={bookmarksState}
-        incLikes={incLikes}
-        decLikes={decLikes}
-        incBookMarks={incBookMarks}
-        decBookMarks={decBookMarks}
         setAuth={setAuth}
       />
       <div className='main-post-item bg-white'>

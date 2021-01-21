@@ -10,27 +10,30 @@ import { Like, LikeFill, BookMark, UnBookMark, More } from '../icons/icons';
 // component
 import SharePost from './SharePost';
 const ActionPostItem = ({
+  post: { likesCount, bookmarksCount },
   auth,
   handleBookmarksAction,
   handleLikeAction,
   likedState,
   bookmarkedState,
-  likesState,
-  bookmarksState,
-  incLikes,
-  decLikes,
-  incBookMarks,
-  decBookMarks,
   setAuth,
 }) => {
   const [liked, setLiked] = useState(likedState);
   const [bookmarked, setBookMarked] = useState(bookmarkedState);
   const [share, setShare] = useState(false);
+  const [likesState, setLikes] = useState(likesCount);
+  const [bookmarksState, setBookMarks] = useState(bookmarksCount);
 
+  const incLikes = () => setLikes(likesState + 1);
+  const decLikes = () => setLikes(likesState - 1);
+  const incBookMarks = () => setBookMarks(bookmarksState + 1);
+  const decBookMarks = () => setBookMarks(bookmarksState - 1);
   useEffect(() => {
     setLiked(likedState);
+  }, [likedState]);
+  useEffect(() => {
     setBookMarked(bookmarkedState);
-  }, [likedState, bookmarkedState]);
+  }, [bookmarkedState]);
   const handleLike = () => {
     if (auth.isAuthenticated) {
       if (liked) {
@@ -61,6 +64,7 @@ const ActionPostItem = ({
       return setAuth(true);
     }
   };
+  console.log('Action');
   return (
     <div className='post-item__action'>
       <div className='post-item__action-content wrap'>
@@ -134,10 +138,12 @@ const ActionPostItem = ({
 
 ActionPostItem.propTypes = {
   auth: PropTypes.object.isRequired,
+  post: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  post: state.post.post,
 });
 
 export default connect(mapStateToProps)(ActionPostItem);

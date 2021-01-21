@@ -7,6 +7,8 @@ export const ProgressBar = ({
   setImageUrl,
   setImageUpdateUser,
   setCoverImage,
+  setImgArray,
+  imgArray,
 }) => {
   const { url, progress } = useStorage(file);
 
@@ -17,6 +19,9 @@ export const ProgressBar = ({
       }
       if (setImageUrl) {
         setImageUrl(`![Alt Text](${url})`);
+      }
+      if (setImgArray) {
+        setImgArray([...imgArray, url]);
       }
       if (setImageUpdateUser) {
         setImageUpdateUser(url);
