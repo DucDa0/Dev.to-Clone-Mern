@@ -1,8 +1,8 @@
 {
   "mongoURI": "mongodb+srv://XuanDatDinh:xuandat123@mydevcom.gio7h.mongodb.net/MyDevCom?retryWrites=true&w=majority",
   "JWT_SECRET": "starrynight09061159",
-  "NODEMAILER_EMAIL": "naruto9xbmt3@gmail.com",
-  "NODEMAILER_PASS": "xuandat123",
+  "NODEMAILER_EMAIL": "dinhsonhai2701@gmail.com",
+  "NODEMAILER_PASS": "Sonhai@123",
   "JWT_ACCOUNT_ACTIVATION": "ducdao09061159696",
   "JWT_EMAIL_ACTIVATION": "starrynight1159",
   "JWT_RESET_PASSWORD": "qwfqwf54654864f15e",
