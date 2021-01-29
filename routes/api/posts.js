@@ -424,7 +424,7 @@ router.put('/like/:id', [auth, checkObjectId('id')], async (req, res) => {
       return res.status(404).json({ msg: 'Post not found!' });
     }
     let check = false; // check user like or unlike
-    if (post.likes.includes(req.user.id)) {
+    if (post.likes.some((item) => item.toString() === req.user.id.toString())) {
       const index = post.likes.indexOf(req.user.id);
       post.likes.splice(index, 1);
       post.likesCount = post.likesCount - 1;
@@ -519,7 +519,9 @@ router.put('/bookmarks/:id', [auth, checkObjectId('id')], async (req, res) => {
       return res.status(404).json({ msg: 'User not found!' });
     }
     let check = false;
-    if (post.bookmarks.includes(req.user.id)) {
+    if (
+      post.bookmarks.some((item) => item.toString() === req.user.id.toString())
+    ) {
       const index = post.bookmarks.indexOf(req.user.id);
       post.bookmarks.splice(index, 1);
       post.bookmarksCount = post.bookmarksCount - 1;
@@ -530,7 +532,11 @@ router.put('/bookmarks/:id', [auth, checkObjectId('id')], async (req, res) => {
     }
 
     // add or remove post to reading lists of user
-    if (user.bookMarkedPosts.includes(req.params.id)) {
+    if (
+      user.bookMarkedPosts.some(
+        (item) => item.toString() === req.params.id.toString()
+      )
+    ) {
       const index = user.bookMarkedPosts.indexOf(req.params.id);
       user.bookMarkedPosts.splice(index, 1);
       user.bookMarkedPostsCount = user.bookMarkedPostsCount - 1;

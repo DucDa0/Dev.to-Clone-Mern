@@ -341,11 +341,9 @@ router.put('/update', [auth, validUpdateUser], async (req, res) => {
 
     if (password) {
       if (password.length < 6 || password.length > 32) {
-        return res
-          .status(400)
-          .json({
-            errors: [{ msg: 'Password must be between 6 to 32 characters' }],
-          });
+        return res.status(400).json({
+          errors: [{ msg: 'Password must be between 6 to 32 characters' }],
+        });
       }
       if (!/\d/.test(password)) {
         return res
@@ -503,7 +501,9 @@ router.put('/follow/:id', [auth, checkObjectId('id')], async (req, res) => {
     // i don't use findOneAndUpdate, because use array methods are more efficient in case user trigger constantly
     // like, bookmark, follow tags and comment i also use array method to update data
     let check = false;
-    if (me.following.includes(req.params.id)) {
+    if (
+      me.following.some((item) => item.toString() === req.params.id.toString())
+    ) {
       const index = me.following.indexOf(req.params.id);
       me.following.splice(index, 1);
       me.followingCount = me.followingCount - 1;
@@ -569,7 +569,11 @@ router.put(
         return res.status(404).json({ msg: 'User not found!' });
       }
       let check = false;
-      if (user.followingTags.includes(req.params.id)) {
+      if (
+        user.followingTags.some(
+          (item) => item.toString() === req.params.id.toString()
+        )
+      ) {
         const index = user.followingTags.indexOf(req.params.id);
         user.followingTags.splice(index, 1);
         user.tagCounts = user.tagCounts - 1;
