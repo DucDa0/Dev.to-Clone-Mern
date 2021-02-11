@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // router/redux
-import { Link } from 'react-router-dom';
+import { Link, withRouter, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import store from '../../store';
 
@@ -29,6 +29,18 @@ const Navbar = ({
   usersCount,
 }) => {
   const [guestLink, setGuestLink] = useState(false);
+  const [searchValues, setSearchValues] = useState('');
+  const history = useHistory();
+  const onChange = (event) => {
+    setSearchValues(event.target.value);
+  };
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (!searchValues) {
+      return;
+    }
+    return history.push(`/dev/search/?q=${searchValues}`);
+  };
   return (
     <nav className='wrap-header grid'>
       <div className='top-header'>
@@ -55,12 +67,14 @@ const Navbar = ({
             </Link>
           </div>
           <div className='header-search_bar'>
-            <form action={`/dev/search`} method='GET' acceptCharset='UTF-8'>
+            <form onSubmit={onSubmit} acceptCharset='UTF-8'>
               <input
                 className='header-search_bar-input'
                 type='text'
                 name='q'
                 defaultValue={queryString.parse(window.location.search).q}
+                value={searchValues}
+                onChange={onChange}
                 placeholder='Search...'
                 autoComplete='off'
               />
@@ -170,4 +184,4 @@ const mapStateToProps = (state) => ({
   usersCount: state.post.usersCount,
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(withRouter(Navbar));
