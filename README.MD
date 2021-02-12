@@ -1,7 +1,5 @@
 Link demo: [Devcommunity](https://mydevcomm.herokuapp.com/)
 
-Nghịch ngu nên bay mất cái file readme rồi :((, bay luôn đống commits....
-
 How to run:
 
 > Create file "default.json" in **config** folder, set up your own:
